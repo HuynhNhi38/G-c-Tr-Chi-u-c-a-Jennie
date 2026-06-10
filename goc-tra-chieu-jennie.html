@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Góc Trà Chiều của Jennie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fdf6ec;
+      --warm-bg: #faf3e8;
+      --brown-dark: #3e2723;
+      --brown-mid: #6d4c41;
+      --brown-light: #a1887f;
+      --amber: #c8860a;
+      --amber-light: #f5c842;
+      --gold: #d4a843;
+      --text: #3a2a1e;
+      --text-soft: #7a5c4a;
+      --border: #e8d5b7;
+      --card-bg: #fffdf9;
+      --tag-bg: #f3e8d5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: var(--warm-bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: linear-gradient(135deg, #3e2723 0%, #6d4c41 60%, #a1887f 100%);
+      padding: 60px 20px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "🍃";
+      position: absolute; top: 14px; left: 30px;
+      font-size: 2.5rem; opacity: 0.25;
+    }
+    header::after {
+      content: "🍃";
+      position: absolute; bottom: 14px; right: 30px;
+      font-size: 2.5rem; opacity: 0.25; transform: scaleX(-1);
+    }
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: #fdf6ec;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+    .site-subtitle {
+      margin-top: 10px;
+      font-family: 'Lora', serif;
+      font-style: italic;
+      color: #d7c3ab;
+      font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+    }
+    .tea-deco {
+      margin-top: 18px;
+      font-size: 2rem;
+      letter-spacing: 8px;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      background: var(--brown-dark);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      border-bottom: 3px solid var(--gold);
+    }
+    nav a {
+      color: #d7c3ab;
+      text-decoration: none;
+      padding: 13px 22px;
+      font-size: 0.88rem;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    nav a:hover, nav a.active {
+      background: var(--amber);
+      color: #fff;
+    }
+
+    /* ─── MAIN LAYOUT ─── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 40px;
+    }
+    @media (max-width: 768px) {
+      .container { grid-template-columns: 1fr; }
+      .sidebar { order: -1; }
+    }
+
+    /* ─── STORY CARDS ─── */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--brown-dark);
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .story-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 26px 28px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 2px 8px rgba(62,39,35,0.06);
+    }
+    .story-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(62,39,35,0.12);
+      border-color: var(--gold);
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: var(--tag-bg);
+      color: var(--brown-mid);
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+    }
+    .card-date {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--brown-dark);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .card-excerpt {
+      font-family: 'Lora', serif;
+      font-size: 0.93rem;
+      color: var(--text-soft);
+      line-height: 1.75;
+    }
+    .read-more {
+      display: inline-block;
+      margin-top: 14px;
+      color: var(--amber);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .read-more:hover { text-decoration: underline; }
+
+    /* ─── STORY READER ─── */
+    #story-reader {
+      display: none;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--amber);
+      font-size: 0.88rem;
+      cursor: pointer;
+      margin-bottom: 24px;
+      font-weight: 500;
+      background: none;
+      border: none;
+    }
+    .back-btn:hover { text-decoration: underline; }
+    .story-full {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 44px;
+      box-shadow: 0 2px 8px rgba(62,39,35,0.06);
+    }
+    @media (max-width: 600px) { .story-full { padding: 24px 20px; } }
+    .story-full h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      color: var(--brown-dark);
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .story-full .meta {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+    .story-content {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--text);
+    }
+    .story-content p { margin-bottom: 1.2em; }
+    .story-content .chapter-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--brown-mid);
+      margin: 2em 0 0.8em;
+      font-style: italic;
+    }
+    .divider {
+      text-align: center;
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin: 2em 0;
+      letter-spacing: 12px;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(62,39,35,0.05);
+    }
+    .sidebar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--brown-dark);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .author-avatar {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brown-mid), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 12px;
+    }
+    .author-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      text-align: center;
+      color: var(--brown-dark);
+      margin-bottom: 6px;
+    }
+    .author-bio {
+      font-size: 0.83rem;
+      color: var(--text-soft);
+      line-height: 1.65;
+      text-align: center;
+    }
+    .category-list { list-style: none; }
+    .category-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      transition: color 0.2s;
+    }
+    .category-list li:last-child { border-bottom: none; }
+    .category-list li:hover { color: var(--amber); }
+    .cat-count {
+      background: var(--tag-bg);
+      border-radius: 20px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      color: var(--brown-light);
+    }
+    .quote-box {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--brown-mid);
+      line-height: 1.7;
+      text-align: center;
+      padding: 6px 4px;
+    }
+    .quote-box span { display: block; margin-top: 8px; font-size: 0.78rem; color: var(--brown-light); }
+
+    /* ─── ABOUT PAGE ─── */
+    #about-page {
+      display: none;
+    }
+    .about-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(62,39,35,0.06);
+      text-align: center;
+    }
+    .about-avatar {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brown-mid), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto 20px;
+      box-shadow: 0 4px 16px rgba(62,39,35,0.2);
+    }
+    .about-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--brown-dark);
+      margin-bottom: 8px;
+    }
+    .about-text {
+      font-family: 'Lora', serif;
+      font-size: 0.97rem;
+      line-height: 1.85;
+      color: var(--text-soft);
+      max-width: 600px;
+      margin: 16px auto;
+    }
+
+    /* ─── WRITE PAGE ─── */
+    #write-page { display: none; }
+    .write-form input, .write-form textarea, .write-form select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Lora', serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--cream);
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .write-form input:focus, .write-form textarea:focus, .write-form select:focus {
+      border-color: var(--gold);
+    }
+    .write-form textarea {
+      min-height: 320px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+    .write-form label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .btn-publish {
+      background: linear-gradient(135deg, var(--brown-dark), var(--brown-mid));
+      color: #fdf6ec;
+      border: none;
+      padding: 13px 32px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+    .btn-publish:hover {
+      background: linear-gradient(135deg, var(--amber), var(--brown-mid));
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(62,39,35,0.25);
+    }
+    .write-tip {
+      background: var(--tag-bg);
+      border-left: 3px solid var(--gold);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.83rem;
+      color: var(--text-soft);
+      margin-bottom: 20px;
+      line-height: 1.65;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--brown-dark);
+      color: #a1887f;
+      font-size: 0.82rem;
+      margin-top: 40px;
+    }
+    footer span { color: var(--gold); }
+
+    /* ─── SEARCH ─── */
+    .search-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .search-box input {
+      flex: 1;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 0.88rem;
+      background: var(--cream);
+      color: var(--text);
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--gold); }
+    .search-box button {
+      background: var(--brown-mid);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: background 0.2s;
+    }
+    .search-box button:hover { background: var(--amber); }
+
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--text-soft);
+      font-family: 'Lora', serif;
+      font-style: italic;
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="site-title">☕ Góc Trà Chiều của Jennie</div>
+  <div class="site-subtitle">Nơi những câu chuyện được rót ra như một tách trà thơm...</div>
+  <div class="tea-deco">🍃 · · · 🍃</div>
+</header>
+
+<nav>
+  <a class="active" onclick="showPage('home')">📖 Trang chủ</a>
+  <a onclick="showPage('write')">✍️ Đăng truyện</a>
+  <a onclick="showPage('about')">🌿 Về Jennie</a>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home-page">
+  <div class="container">
+    <main>
+      <div class="section-title">📚 Truyện mới nhất</div>
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Tìm kiếm truyện..." oninput="filterStories()" />
+        <button onclick="filterStories()">Tìm</button>
+      </div>
+
+      <div id="story-list">
+        <!-- Stories rendered by JS -->
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="author-avatar">🌸</div>
+        <div class="author-name">Jennie</div>
+        <div class="author-bio">Một góc nhỏ để viết — viết về những điều bình thường mà đẹp lạ kỳ. Rót thêm trà và đọc cùng nhau nhé.</div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">📂 Thể loại</div>
+        <ul class="category-list" id="category-list"></ul>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">☕ Trích dẫn hôm nay</div>
+        <div class="quote-box" id="daily-quote"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- STORY READER -->
+<div id="story-reader">
+  <div class="container" style="grid-template-columns:1fr;">
+    <button class="back-btn" onclick="showPage('home')">← Quay lại danh sách</button>
+    <div class="story-full" id="story-content-area"></div>
+  </div>
+</div>
+
+<!-- WRITE PAGE -->
+<div id="write-page">
+  <div class="container" style="grid-template-columns:1fr;">
+    <div class="section-title">✍️ Đăng truyện mới</div>
+    <div class="sidebar-card">
+      <div class="write-tip">
+        💡 <strong>Mẹo:</strong> Truyện được lưu trong trình duyệt. Để lưu vĩnh viễn, hãy copy nội dung và lưu vào file .txt — hoặc liên hệ để được hỗ trợ nâng cấp lên database nhé!
+      </div>
+      <div class="write-form">
+        <label>Tiêu đề truyện *</label>
+        <input type="text" id="new-title" placeholder="Nhập tiêu đề truyện..." />
+
+        <label>Thể loại *</label>
+        <select id="new-category">
+          <option value="Truyện ngắn">Truyện ngắn</option>
+          <option value="Tản văn">Tản văn</option>
+          <option value="Truyện dài">Truyện dài / nhiều chương</option>
+          <option value="Nông trại">Nông trại & đồng quê</option>
+          <option value="Cảm xúc">Cảm xúc cá nhân</option>
+          <option value="Khác">Khác</option>
+        </select>
+
+        <label>Nội dung *</label>
+        <textarea id="new-content" placeholder="Bắt đầu viết câu chuyện của bạn...&#10;&#10;(Mỗi đoạn văn cách nhau bằng 1 dòng trống)"></textarea>
+
+        <button class="btn-publish" onclick="publishStory()">🍃 Đăng truyện</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="about-page">
+  <div class="container" style="grid-template-columns:1fr;">
+    <div class="about-card">
+      <div class="about-avatar">🌸</div>
+      <div class="about-name">Jennie</div>
+      <p class="about-text">
+        Chào mừng bạn đến với <em>Góc Trà Chiều</em> — một không gian nhỏ, ấm áp, nơi tôi
+        cất giữ những câu chuyện mình viết ra trong những buổi chiều yên tĩnh.
+      </p>
+      <p class="about-text">
+        Tôi viết về nhiều thứ — những điều bình thường trong cuộc sống, những xúc cảm khó gọi tên,
+        và đôi khi là cả những giấc mơ giữa ban ngày. Không có chủ đề cố định,
+        chỉ là sự thật theo cách tôi nhìn thấy.
+      </p>
+      <p class="about-text">
+        Nếu bạn tìm thấy mình trong những trang viết này — tôi rất vui. ☕
+      </p>
+      <div style="margin-top:24px; color: var(--brown-light); font-size:0.85rem;">
+        📧 Liên hệ: <a href="mailto:nongnghiep@gianguyenreal.com" style="color:var(--amber);">nongnghiep@gianguyenreal.com</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 <span>Góc Trà Chiều của Jennie</span> — Mọi nội dung đều thuộc quyền tác giả 🍃
+</footer>
+
+<script>
+  // ─── DATA ───
+  const QUOTES = [
+    { text: "Có những câu chuyện không cần kết thúc hoàn hảo, chỉ cần được kể ra — như thế là đủ.", author: "— Jennie" },
+    { text: "Trà nguội đi khi ta mải đọc. Đó là dấu hiệu của một câu chuyện hay.", author: "— Vô danh" },
+    { text: "Viết là cách tôi nhớ mình đã từng cảm thấy điều gì đó thật sự.", author: "— Jennie" },
+    { text: "Mỗi trang viết là một buổi chiều không bao giờ mất đi.", author: "— Jennie" },
+  ];
+
+  const DEFAULT_STORIES = [
+    {
+      id: 1,
+      title: "Buổi chiều ở vườn chuối",
+      category: "Nông trại",
+      date: "08/06/2026",
+      excerpt: "Có những buổi chiều, gió từ phía sông thổi qua vườn chuối, mang theo mùi đất ướt và tiếng lá xào xạc như ai đó đang thì thầm một điều gì đó cũ kỹ mà đẹp...",
+      content: `Có những buổi chiều, gió từ phía sông thổi qua vườn chuối, mang theo mùi đất ướt và tiếng lá xào xạc như ai đó đang thì thầm một điều gì đó cũ kỹ mà đẹp.
+
+Tôi hay ngồi ở đầu bờ, nhìn về phía cánh đồng bên kia. Không làm gì cả. Chỉ ngồi. Và thấy lòng nhẹ hơn lúc nào hết.
+
+Ông ngoại tôi hay nói: "Đất không phản người chịu khó." Câu đó tôi thuộc từ nhỏ, nhưng mãi đến khi tự mình cầm cuốc, tự mình nhổ cỏ dưới nắng, tôi mới thật sự hiểu ông muốn nói gì.
+
+Đất không phản. Nhưng đất cũng không thương hại. Đất chỉ trả lại đúng những gì mình bỏ vào.
+
+Buổi chiều hôm ấy, tôi ngồi rất lâu ở vườn chuối. Không biết mình đang nghĩ gì. Chỉ thấy gió mát, mùi đất thơm, và cảm giác rằng — ở đây, lúc này, mình đang là chính mình nhất.`,
+    },
+    {
+      id: 2,
+      title: "Một tách trà, một cuốn sách, và mưa",
+      category: "Tản văn",
+      date: "05/06/2026",
+      excerpt: "Mưa bắt đầu lúc bốn giờ chiều. Tôi đang đọc dở một cuốn sách — trang 87, đoạn người đàn ông già ngồi nhìn ra cửa sổ...",
+      content: `Mưa bắt đầu lúc bốn giờ chiều.
+
+Tôi đang đọc dở một cuốn sách — trang 87, đoạn người đàn ông già ngồi nhìn ra cửa sổ và tự hỏi mình đã bỏ lỡ bao nhiêu buổi chiều như thế này trong đời.
+
+Tôi gấp sách lại. Pha trà.
+
+Ngồi nhìn mưa rơi.
+
+Có điều gì đó trong tiếng mưa khiến người ta muốn ngồi yên lặng hơn, muốn nói ít hơn, muốn chỉ... tồn tại thôi. Không cần phải làm gì. Không cần phải là ai.
+
+Trà còn ấm. Mưa vẫn rơi. Và tôi nhận ra — đây là một buổi chiều rất đẹp. Không phải vì có gì đặc biệt. Mà vì không có gì cần phải đặc biệt cả.`,
+    },
+    {
+      id: 3,
+      title: "Người đàn bà bán xoài ở cuối chợ",
+      category: "Truyện ngắn",
+      date: "01/06/2026",
+      excerpt: "Bà Sáu ngồi ở cuối chợ từ năm giờ sáng. Năm nào cũng vậy, mùa xoài nào cũng vậy. Ba chục năm, không một ngày nghỉ...",
+      content: `Bà Sáu ngồi ở cuối chợ từ năm giờ sáng.
+
+Năm nào cũng vậy, mùa xoài nào cũng vậy. Ba chục năm, không một ngày nghỉ.
+
+Người ta hay nói bà khổ. Bán xoài mà nuôi được ba đứa con ăn học, cái đó gọi là khổ thì từ "giỏi" để dành cho ai?
+
+Tôi hay ghé mua xoài của bà — không hẳn vì xoài ngon (dù xoài bà thật sự ngon), mà vì thích nghe bà kể chuyện. Bà kể bằng giọng chậm rãi, thản nhiên, như người đang kể về chuyện của ai đó khác. Không oán. Không tự hào. Chỉ kể.
+
+Hôm nay bà nói: "Con à, đời người ta giống cây xoài lắm. Năm nào ra nhiều trái thì dễ gãy cành. Vừa vừa thôi là được."
+
+Tôi ngồi nghe, cầm túi xoài trên tay, và thấy mình vừa nhận được thứ gì đó quý hơn xoài rất nhiều.`,
+    },
+  ];
+
+  // Load from localStorage or use defaults
+  function loadStories() {
+    const saved = localStorage.getItem('jennie-stories');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return parsed.length ? parsed : DEFAULT_STORIES;
+    }
+    return DEFAULT_STORIES;
+  }
+
+  function saveStories(stories) {
+    localStorage.setItem('jennie-stories', JSON.stringify(stories));
+  }
+
+  let stories = loadStories();
+  let filteredStories = [...stories];
+
+  // ─── RENDER FUNCTIONS ───
+  function renderStoryCard(story) {
+    return `
+      <div class="story-card" onclick="openStory(${story.id})">
+        <div class="card-meta">
+          <span class="tag">${story.category}</span>
+          <span class="card-date">📅 ${story.date}</span>
+        </div>
+        <div class="card-title">${story.title}</div>
+        <div class="card-excerpt">${story.excerpt || story.content.substring(0, 150) + '...'}</div>
+        <span class="read-more">Đọc tiếp →</span>
+      </div>
+    `;
+  }
+
+  function renderStories() {
+    const container = document.getElementById('story-list');
+    if (!filteredStories.length) {
+      container.innerHTML = `<div class="empty-state"><div class="icon">🍃</div><p>Chưa có truyện nào. Hãy đăng truyện đầu tiên của bạn!</p></div>`;
+      return;
+    }
+    container.innerHTML = filteredStories.map(renderStoryCard).join('');
+  }
+
+  function renderCategories() {
+    const counts = {};
+    stories.forEach(s => { counts[s.category] = (counts[s.category] || 0) + 1; });
+    const list = document.getElementById('category-list');
+    const all = `<li onclick="filterByCategory('')"><span>📚 Tất cả</span><span class="cat-count">${stories.length}</span></li>`;
+    const items = Object.entries(counts).map(([cat, n]) =>
+      `<li onclick="filterByCategory('${cat}')"><span>${cat}</span><span class="cat-count">${n}</span></li>`
+    ).join('');
+    list.innerHTML = all + items;
+  }
+
+  function renderQuote() {
+    const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    document.getElementById('daily-quote').innerHTML = `"${q.text}"<span>${q.author}</span>`;
+  }
+
+  function openStory(id) {
+    const story = stories.find(s => s.id === id);
+    if (!story) return;
+    const paragraphs = story.content.split('\n\n').map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+    document.getElementById('story-content-area').innerHTML = `
+      <h1>${story.title}</h1>
+      <div class="meta">
+        <span>📂 ${story.category}</span>
+        <span>📅 ${story.date}</span>
+      </div>
+      <div class="story-content">${paragraphs}</div>
+      <div class="divider">✦ · · · ✦</div>
+    `;
+    hideAll();
+    document.getElementById('story-reader').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  function filterStories() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    filteredStories = stories.filter(s =>
+      s.title.toLowerCase().includes(q) ||
+      s.content.toLowerCase().includes(q) ||
+      s.category.toLowerCase().includes(q)
+    );
+    renderStories();
+  }
+
+  function filterByCategory(cat) {
+    filteredStories = cat ? stories.filter(s => s.category === cat) : [...stories];
+    document.getElementById('search-input').value = '';
+    renderStories();
+    showPage('home');
+  }
+
+  // ─── PUBLISH ───
+  function publishStory() {
+    const title = document.getElementById('new-title').value.trim();
+    const category = document.getElementById('new-category').value;
+    const content = document.getElementById('new-content').value.trim();
+    if (!title || !content) {
+      alert('Vui lòng nhập tiêu đề và nội dung truyện!');
+      return;
+    }
+    const today = new Date();
+    const date = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+    const newId = Date.now();
+    const newStory = {
+      id: newId,
+      title,
+      category,
+      date,
+      content,
+      excerpt: content.substring(0, 160) + '...',
+    };
+    stories.unshift(newStory);
+    saveStories(stories);
+    filteredStories = [...stories];
+    document.getElementById('new-title').value = '';
+    document.getElementById('new-content').value = '';
+    renderStories();
+    renderCategories();
+    alert(`✅ Đã đăng truyện "${title}" thành công!`);
+    showPage('home');
+  }
+
+  // ─── NAVIGATION ───
+  function hideAll() {
+    ['home-page','story-reader','write-page','about-page'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  }
+
+  function showPage(page) {
+    hideAll();
+    const pageMap = {
+      'home': 'home-page',
+      'write': 'write-page',
+      'about': 'about-page',
+    };
+    if (pageMap[page]) {
+      document.getElementById(pageMap[page]).style.display = 'block';
+      const navLinks = document.querySelectorAll('nav a');
+      const idx = { home: 0, write: 1, about: 2 };
+      if (navLinks[idx[page]]) navLinks[idx[page]].classList.add('active');
+    }
+    window.scrollTo(0, 0);
+  }
+
+  // ─── INIT ───
+  renderStories();
+  renderCategories();
+  renderQuote();
+</script>
+</body>
+</html>
